@@ -1,0 +1,14 @@
+pylint
+rope
+numpy
+scipy
+pandas
+sklearn
+matplotlib
+jupyter
+flask
+flask-cors
+keras
+tensorflow
+pyfunctional
+recordclass
