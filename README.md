@@ -1,10 +1,15 @@
 # Financial Analytics Classifier
 
-## Dependecy resolve
-```shell
-> virtualenv --system-site-packages -p python3 ./.venv
-> source ./.venv/bin/activate
-(venv) > pip install --upgrade pip
-(venv) > pip install --upgrade -r requirements.txt
-(venv) > deactivate
-```
+## Run
+1. Copy '.env.example' to '.env' and initialize all properties
+2. Run command:
+    ```bash
+    make start
+    ```
+
+## Resolve dependencies (e.g. to use only Jutyper Notebooks)
+1. Copy '.env.example' to '.env'
+2. Run command:
+    ```bash
+    make resolve-dependencies
+    ```
