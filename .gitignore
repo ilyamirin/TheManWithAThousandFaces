@@ -1,3 +1,5 @@
 .vscode
 .venv
+.env
 src/resources/dataset
+src/resources/embedding
