@@ -5,11 +5,12 @@ if [ ! -d src/resources/embedding/rubert ]; then
     Downloading BERT embedding model...
     "
 
-    wget "http://files.deeppavlov.ai/deeppavlov_data/bert/rubert_cased_L-12_H-768_A-12_v2.tar.gz"
+    wget "http://files.deeppavlov.ai/deeppavlov_data/bert/rubert_cased_L-12_H-768_A-12_pt.tar.gz"
     mkdir src/resources/embedding
-    tar -xvzf rubert_cased_L-12_H-768_A-12_v2.tar.gz -C src/resources/embedding/
-    mv src/resources/embedding/rubert_cased_L-12_H-768_A-12_v2 src/resources/embedding/rubert
-    rm rubert_cased_L-12_H-768_A-12_v2.tar.gz
+    tar -xvzf rubert_cased_L-12_H-768_A-12_pt.tar.gz -C src/resources/embedding/
+    mv src/resources/embedding/rubert_cased_L-12_H-768_A-12_pt src/resources/embedding/rubert
+    mv src/resources/embedding/rubert/bert_config.json src/resources/embedding/rubert/config.json
+    rm rubert_cased_L-12_H-768_A-12_pt.tar.gz
 fi
 
 if [ ! -f src/resources/embedding/dp-fasttext.bin ]; then
