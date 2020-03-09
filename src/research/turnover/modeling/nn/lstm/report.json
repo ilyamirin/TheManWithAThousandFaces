@@ -1,1 +1,0 @@
-{"cleared_test": {"accuracy": 0.6355721393034826, "log_loss": 1.355349554292463}, "original_test": {"accuracy": 0.7675450039133838, "log_loss": 1.44421013824244}, "epochs": 17, "training_time_sec": 1184.7860975265503}

@@ -1,0 +1,11 @@
+{
+    "Name": "BERT Mean FC NN",
+    "[Cleared Test] Accuracy": 0.6617,
+    "[Cleared Test] Log Loss": 1.3155,
+    "[Original Test] Accuracy": 0.7857,
+    "[Original Test] Log Loss": 1.4313,
+    "Training time": "00h 00m 49s",
+    "Training time (sec)": 49,
+    "Model epoch": 3,
+    "Epochs": 13
+}
