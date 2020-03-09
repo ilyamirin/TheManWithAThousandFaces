@@ -1,0 +1,11 @@
+{
+    "Name": "fastText Mean FC NN",
+    "[Cleared Test] Accuracy": 0.6723,
+    "[Cleared Test] Log Loss": 1.1988,
+    "[Original Test] Accuracy": 0.7711,
+    "[Original Test] Log Loss": 1.3617,
+    "Training time": "00h 00m 35s",
+    "Training time (sec)": 35,
+    "Model epoch": 4,
+    "Epochs": 14
+}
