@@ -1,0 +1,11 @@
+{
+    "Name": "BERT LSTM",
+    "[Cleared Test] Accuracy": 0.6909,
+    "[Cleared Test] Log Loss": 1.0802,
+    "[Original Test] Accuracy": 0.8443,
+    "[Original Test] Log Loss": 1.1734,
+    "Training time": "00h 15m 18s",
+    "Training time (sec)": 918,
+    "Model epoch": 28,
+    "Epochs": 58
+}
