@@ -1,11 +1,11 @@
 {
     "Name": "BERT CNN",
-    "[Cleared Test] Accuracy": 0.6561,
-    "[Cleared Test] Log Loss": 1.4349,
-    "[Original Test] Accuracy": 0.8424,
-    "[Original Test] Log Loss": 1.2507,
-    "Training time": "00h 03m 32s",
-    "Training time (sec)": 212,
-    "Model epoch": 4,
-    "Epochs": 14
+    "[Cleared Test] Accuracy": 0.6947,
+    "[Cleared Test] Log Loss": 1.0885,
+    "[Original Test] Accuracy": 0.8664,
+    "[Original Test] Log Loss": 1.136,
+    "Training time": "00h 10m 35s",
+    "Training time (sec)": 635,
+    "Model epoch": 14,
+    "Epochs": 34
 }
