@@ -1,11 +1,11 @@
 {
     "Name": "Fine-Tunned BERT",
-    "[Cleared Test] Accuracy": 0.6965,
-    "[Cleared Test] Log Loss": 1.1698,
-    "[Original Test] Accuracy": 0.8572,
-    "[Original Test] Log Loss": 0.7026,
-    "Training time": "00h 14m 17s",
-    "Training time (sec)": 857,
+    "[Cleared Test] Accuracy": 0.7152,
+    "[Cleared Test] Log Loss": 1.1126,
+    "[Original Test] Accuracy": 0.8705,
+    "[Original Test] Log Loss": 0.7707,
+    "Training time": "00h 15m 41s",
+    "Training time (sec)": 941,
     "Model epoch": 4,
-    "Epochs": 15
+    "Epochs": 11
 }
