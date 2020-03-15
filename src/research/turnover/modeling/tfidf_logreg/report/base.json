@@ -1,0 +1,11 @@
+{
+    "Name": "TF-IDF Logistic Regression",
+    "[Cleared Test] Accuracy": 0.7077,
+    "[Cleared Test] Log Loss": 4.0,
+    "[Original Test] Accuracy": 0.7859,
+    "[Original Test] Log Loss": 5.0,
+    "Training time": "00h 00m 07s",
+    "Training time (sec)": 7,
+    "Model epoch": 1,
+    "Epochs": 51
+}
