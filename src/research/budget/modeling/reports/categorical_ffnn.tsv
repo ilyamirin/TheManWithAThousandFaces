@@ -1,0 +1,6 @@
+Name	Categorical Feed-Forward NN
+[Cleared] Accuracy	0.7714
+[Cleared] Log Loss	0.8322
+[Original] Accuracy	0.7853
+[Original] Log Loss	1.1148
+Training time (sec)	10.097127199172974
