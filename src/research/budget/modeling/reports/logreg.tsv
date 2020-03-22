@@ -1,6 +1,6 @@
 Name	Logistic Regression
-[Cleared CV] Accuracy	0.6675362318840579
-[Cleared CV] Log Loss	0.9427121110560419
+[Cleared CV] Accuracy	0.7192436974789918
+[Cleared CV] Log Loss	0.8931120082353772
 [Original] Accuracy	0.7752
 [Original] Log Loss	1.9832
-Training time (sec)	1.20614914894104
+Training time (sec)	1.210932970046997
