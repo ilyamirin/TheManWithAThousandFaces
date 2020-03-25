@@ -2,3 +2,4 @@
 .venv
 .env
 src/resources
+**/__pycache__
