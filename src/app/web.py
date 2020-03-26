@@ -1,10 +1,10 @@
-import os, logging
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import tensorflow as tf
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
+
 from turnover_model import TurnoverModel
 from domain import TurnoverInput
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
 
 
 turnover_model_ = TurnoverModel.load_trained()
