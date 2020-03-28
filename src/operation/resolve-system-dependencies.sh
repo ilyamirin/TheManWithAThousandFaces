@@ -4,6 +4,10 @@
     "
     
     sudo apt update
+
+    echo "
+    ├── Complete
+    "
 fi
 
 if ! [ -x "$(command -v npm)" ]; then
@@ -14,6 +18,10 @@ if ! [ -x "$(command -v npm)" ]; then
     sudo apt install -y npm
     sudo npm install -g npm
     hash -d npm
+
+    echo "
+    ├── Complete
+    "
 fi
 
 if ! [ -x "$(command -v docker)" ]; then
@@ -27,4 +35,20 @@ if ! [ -x "$(command -v docker)" ]; then
     sudo apt update
     sudo apt install -y docker-ce
     sudo usermod -aG docker ${USER}
+
+    echo "
+    ├── Complete
+    "
+fi
+
+if ! [ -x "$(command -v rclone)" ]; then
+    echo "
+    Installing RClone...
+    "
+
+    curl https://rclone.org/install.sh | sudo bash
+
+    echo "
+    ├── Complete
+    "
 fi

@@ -17,3 +17,12 @@ resolve-dependencies:
 
 update-python-libs:
 	@./.venv/bin/pip install -r requirements.txt
+
+config-drive-connection:
+	@./src/operation/config-rclone.sh
+
+sync-resources-inbound:
+	@rclone sync KeterideDrive:Financial-Analytics-Classifier src/resources/production
+
+sync-resources-outbound:
+	@rclone sync src/resources/production KeterideDrive:Financial-Analytics-Classifier

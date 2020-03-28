@@ -18,7 +18,7 @@ from embedding import fasttext_model
 from domain import TurnoverInput, NetOutput, Prediction
 
 
-RESOURCES_PATH = 'src/resources'
+RESOURCES_PATH = 'src/resources/production/turnover'
 
 EMBEDDING_VEC_LEN = 300
 MAX_NOMENCLATURE_LEN = 17
@@ -60,7 +60,7 @@ class TurnoverModel:
         return self._to_net_output(y_pred_vec)
     
     def fit(self):
-        Path(f'{RESOURCES_PATH}/model_checkpoint/turnover/production/').mkdir(parents=True, exist_ok=True)
+        Path(f'{RESOURCES_PATH}/categorical').mkdir(parents=True, exist_ok=True)
 
         x, y = self._get_train_vecs()
         x_train, y_train, x_val, y_val = self._split_to_train_val(x, y)
@@ -71,27 +71,27 @@ class TurnoverModel:
             epochs=FIT_MAX_EPOCHS,
             callbacks=[
                 EarlyStopping(monitor='val_loss', patience=FIT_EARLY_STOP_PATIENCE),
-                ModelCheckpoint(f'{RESOURCES_PATH}/model_checkpoint/turnover/production/model.h5', monitor='val_loss', save_best_only=True, verbose=1)
+                ModelCheckpoint(f'{RESOURCES_PATH}/model.h5', monitor='val_loss', save_best_only=True, verbose=1)
             ],
             verbose=1
         )
 
-        self._model = load_model(f'{RESOURCES_PATH}/model_checkpoint/turnover/production/model.h5')
+        self._model = load_model(f'{RESOURCES_PATH}/model.h5')
 
         loss, acc = self._model.evaluate(x_val, y_val)
         print(f'Training completed. Final accuracy = {round(acc, 4)}, loss = {round(loss, 4)}')
     
     def save(self):
-        self._model.save(f'{RESOURCES_PATH}/production/turnover/model.h5')
+        self._model.save(f'{RESOURCES_PATH}/model.h5')
 
         pd.DataFrame({
             'train_loss': self._fit_history.history['loss'], 
             'val_loss': self._fit_history.history['val_loss'], 
             'val_acc': self._fit_history.history['val_accuracy']
             })\
-            .to_csv(f'{RESOURCES_PATH}/production/turnover/history.tsv', index=False, sep='\t')
+            .to_csv(f'{RESOURCES_PATH}/history.tsv', index=False, sep='\t')
         
-        with open(f'{RESOURCES_PATH}/production/turnover/categorical/turnover.txt', 'w') as fout: 
+        with open(f'{RESOURCES_PATH}/categorical/turnover.txt', 'w') as fout: 
             print(*self._turnover_le.classes_, sep='\n', file=fout)
 
     def _to_x_vec(self, nomenclature: str, description: str) -> np.ndarray:
@@ -144,13 +144,13 @@ class TurnoverModel:
 
     def _load_trained_model(self) -> Model:
         print('Loading turnover model...')
-        model = load_model(f'{RESOURCES_PATH}/production/turnover/model.h5')
+        model = load_model(f'{RESOURCES_PATH}/model.h5')
         print('├── Complete')
         return model
     
     def _load_label_encoder(self, label: str) -> LabelEncoder:
         le = LabelEncoder()
-        le.classes_ = np.array(Path(f'{RESOURCES_PATH}/production/turnover/categorical/{label}.txt').read_text().split('\n'))
+        le.classes_ = np.array(Path(f'{RESOURCES_PATH}/categorical/{label}.txt').read_text().split('\n'))
         return le
     
     def _warm_up(self) -> None:
