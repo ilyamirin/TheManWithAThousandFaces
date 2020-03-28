@@ -14,8 +14,8 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, History
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.utils import to_categorical
 
-from embedding import fasttext_model
-from domain import TurnoverInput, NetOutput, Prediction
+from core.embedding import fasttext_model
+from core.domain import TurnoverInput, NetOutput, Prediction
 
 
 RESOURCES_PATH = 'src/resources/production/turnover'

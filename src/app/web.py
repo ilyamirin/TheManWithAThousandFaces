@@ -3,8 +3,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = '3'
 
-from turnover_model import TurnoverModel
-from domain import TurnoverInput
+from core.turnover_model import TurnoverModel
+from core.domain import TurnoverInput
 
 
 turnover_model_ = TurnoverModel.load_trained()
