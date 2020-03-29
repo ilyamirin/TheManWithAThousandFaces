@@ -20,7 +20,7 @@ from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 from core.embedding import fasttext_model
-from core.domain import BudgetInput, NetOutput, Prediction
+from core.domain import BudgetInput, NetOutput, Prediction, BusinessException
 
 
 RESOURCES_PATH = 'src/resources/production/budget'
@@ -277,7 +277,7 @@ class BudgetModel:
                 return k
 
         if raise_error:
-            raise Exception('Неподдерживаемый формат ВЦС')
+            raise BusinessException('Неподдерживаемый формат ВЦС')
         else:
             return 'UNKNOWN'
 

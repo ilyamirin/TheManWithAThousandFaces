@@ -23,3 +23,7 @@ class Prediction:
 class NetOutput:
     main: Prediction
     alternatives: List[Prediction]
+
+class BusinessException(Exception):
+    def __init__(self, message):
+        self.message = message
