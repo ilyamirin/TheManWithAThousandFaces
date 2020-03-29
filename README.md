@@ -1,5 +1,7 @@
 # Financial Analytics Classifier
 
+![Usage example](src/resources/readme/usage_example.gif?raw=true)
+
 ## Run
 1. Copy '.env.example' to '.env' and initialize all properties
 2. Run command:

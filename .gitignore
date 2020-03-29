@@ -1,5 +1,6 @@
 .vscode
 .venv
 .env
-src/resources
+src/resources/*
+!src/resources/readme
 **/__pycache__
