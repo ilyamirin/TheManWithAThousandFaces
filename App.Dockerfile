@@ -6,15 +6,16 @@ RUN apt-get install -y python3-pip
 WORKDIR /home/app
 
 COPY requirements.txt ./
-COPY src/app/web.py src/app/
-COPY src/app/core src/app/core
-COPY src/resources/production src/resources/production
-COPY src/resources/pretrained/dp-fasttext.bin src/resources/pretrained/
 
 RUN pip3 install -U virtualenv
 RUN virtualenv --system-site-packages -p python3 ./.venv
 RUN ./.venv/bin/pip install --upgrade pip
 RUN ./.venv/bin/pip install --upgrade -r requirements.txt
+
+COPY src/app/web.py src/app/
+COPY src/app/core src/app/core
+COPY src/resources/production src/resources/production
+COPY src/resources/pretrained/dp-fasttext.bin src/resources/pretrained/
 
 EXPOSE 5000
 
