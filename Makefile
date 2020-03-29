@@ -1,6 +1,6 @@
 include .env
 
-REACT_APP_API_URL=http://${SERVER_IP}:${API_PORT}
+REACT_APP_API_URL=http://${SERVER_IP}:${APP_PORT}
 
 export
 
@@ -44,8 +44,7 @@ stop:
 start: install sync-resources-inbound build run
 	@echo "Successfully Started"
 
-restart: install sync-resources-inbound stop build run
-	@echo "Successfully Restarted"
+restart: stop start
 
 logs:
 	@docker logs -f fac-$(call args)
