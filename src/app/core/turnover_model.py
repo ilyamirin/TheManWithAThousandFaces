@@ -45,10 +45,10 @@ class TurnoverModel:
         return slf
     
     @classmethod
-    def build_untrained(cls, dataset_path: str):
+    def build_untrained(cls, df: DataFrame):
         slf = cls()
         slf._set_reproducibility()
-        slf._df = slf._prepare_dataset(pd.read_csv(dataset_path))
+        slf._df = slf._prepare_dataset(df)
         slf._turnover_le = slf._build_label_encoder(slf._df, 'turnover')
         slf._model = slf._build_untrained_model(len(slf._turnover_le.classes_))
         return slf
@@ -92,7 +92,8 @@ class TurnoverModel:
             .to_csv(f'{RESOURCES_PATH}/history.tsv', index=False, sep='\t')
         
         with open(f'{RESOURCES_PATH}/categorical/turnover.txt', 'w') as fout: 
-            print(*self._turnover_le.classes_, sep='\n', file=fout)
+            print(*self._turnover_le.classes_, sep='\n', end='', file=fout)
+
 
     def _to_x_vec(self, nomenclature: str, description: str) -> np.ndarray:
         nom_vec = pad_sequences([self._get_embeddings(nomenclature)], maxlen=MAX_NOMENCLATURE_LEN, dtype='float32')

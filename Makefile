@@ -30,3 +30,7 @@ sync-resources-outbound:
 train-turnover-model:
 	@.venv/bin/python3.6 src/app/train_turnover_model.py
 	@rclone sync src/resources/production KeterideDrive:Financial-Analytics-Classifier
+
+train-budget-model:
+	@.venv/bin/python3.6 src/app/train_budget_model.py
+	@rclone sync src/resources/production KeterideDrive:Financial-Analytics-Classifier
