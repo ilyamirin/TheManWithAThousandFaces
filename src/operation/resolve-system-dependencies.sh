@@ -9,6 +9,7 @@ fi
 if ! [ -x "$(command -v virtualenv)" ]; then
     echo "Installing python virtual environment..."
     
+    sudo apt install -y python3-pip
     sudo pip3 install -U virtualenv
 
     echo "├── Complete"

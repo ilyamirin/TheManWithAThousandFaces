@@ -32,6 +32,8 @@ train-budget-model:
 	@.venv/bin/python3.6 src/app/train_budget_model.py
 	@./src/operation/sync-resources-outbound.sh
 
+train-models: train_budget_model train_turnover_model
+
 build:
 	@./src/operation/build.sh
 
