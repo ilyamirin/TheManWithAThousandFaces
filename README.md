@@ -6,10 +6,28 @@
     ```bash
     make start
     ```
+> **Note:** Only one interaction is required (other actions are fully automated) -- 
+log in to keteride@gmail account to connect to Google Drive. Please wait for the 
+"Configuring connection to Google Drive..." step and follow the instractions below.
 
-## Resolve dependencies (e.g. to use only Jutyper Notebooks)
+## Install (e.g. to run only research Jutyper Notebooks)
 1. Copy '.env.example' to '.env'
 2. Run command:
     ```bash
-    make resolve-dependencies
+    make install
+    ```
+
+## Other Commands
+* Show logs (of 'ui' or 'app')
+    ```bash
+    make logs app
+    make logs ui
+    ```
+* Restart (with rebuild):
+    ```bash
+    make restart
+    ```
+* Restart (without rebuild):
+    ```bash
+    make run
     ```

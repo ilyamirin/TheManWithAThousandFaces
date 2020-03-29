@@ -1,33 +1,31 @@
  if ! [ -x "$(command -v npm)" ] || ! [ -x "$(command -v docker)" ]; then
-    echo "
-    Updating system...
-    "
+    echo "Updating system..."
     
     sudo apt update
 
-    echo "
-    ├── Complete
-    "
+    echo "├── Complete"
+fi
+
+if ! [ -x "$(command -v virtualenv)" ]; then
+    echo "Installing python virtual environment..."
+    
+    sudo pip3 install -U virtualenv
+
+    echo "├── Complete"
 fi
 
 if ! [ -x "$(command -v npm)" ]; then
-    echo "
-    Installing NPM...
-    "
+    echo "Installing NPM..."
 
     sudo apt install -y npm
     sudo npm install -g npm
     hash -d npm
 
-    echo "
-    ├── Complete
-    "
+    echo "├── Complete"
 fi
 
 if ! [ -x "$(command -v docker)" ]; then
-    echo "
-    Installing docker...
-    "
+    echo "Installing docker..."
 
     sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -36,19 +34,13 @@ if ! [ -x "$(command -v docker)" ]; then
     sudo apt install -y docker-ce
     sudo usermod -aG docker ${USER}
 
-    echo "
-    ├── Complete
-    "
+    echo "├── Complete"
 fi
 
 if ! [ -x "$(command -v rclone)" ]; then
-    echo "
-    Installing RClone...
-    "
+    echo "Installing RClone..."
 
     curl https://rclone.org/install.sh | sudo bash
 
-    echo "
-    ├── Complete
-    "
+    echo "├── Complete"
 fi
