@@ -27,6 +27,10 @@ const useStyles = makeStyles(theme => ({
   alternativesDisplay: {
     paddingRight: theme.spacing(1)
   },
+  errorDisplay: {
+    padding: theme.spacing(1),
+    color: '#f44336'
+  },
   inputDiv: {
     padding: theme.spacing(4, 3),
   },
@@ -50,31 +54,78 @@ export default function App() {
     project: '',
     financing: '',
     nomenclature: '',
-    description: ''
+    description: '',
+    objectError: null,
+    nomenclatureError: null,
+    descriptionError: null
   });
 
   const [predVals, setPredVals] = React.useState({
     budget: null,
-    turnover: null
+    turnover: null,
+    budgetError: null,
+    turnoverError: null
   });
 
 
   const reqPredict = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/budget/predict`, {
+    reqPredictBudget()
+    reqPredictTurnover()
+  }
+
+  const reqPredictTurnover = async () => {
+    if (!inputVals.nomenclature || !inputVals.description) {
+      setInputVals(prev => ({ ...prev,
+        nomenclatureError: !inputVals.nomenclature ? 'Поле должно быть заполнено' : null,
+        descriptionError: !inputVals.description ? 'Поле должно быть заполнено' : null,
+      }))
+      return;
+    }
+
+    const rawRes = await fetch(`${process.env.REACT_APP_API_URL}/turnover/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(inputVals)
-    })
-      .then(rawRes => rawRes.json())
-      .then(res => setPredVals(prev => ({ ...prev, budget: res })))
-    
-    fetch(`${process.env.REACT_APP_API_URL}/turnover/predict`, {
+    });
+
+    const res = await rawRes.json();
+
+    switch (rawRes.status) {
+      case 200:
+        setPredVals(prev => ({ ...prev, turnover: res }));
+        break;
+      case 400:
+        setPredVals(prev => ({ ...prev, turnoverError: `Ошибка ввода данных: ${res.message}` }));
+        break;
+      default:
+        setPredVals(prev => ({ ...prev, turnoverError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
+    }
+  }
+
+  const reqPredictBudget = async () => {
+    if (!inputVals.object) {
+      setInputVals(prev => ({ ...prev, objectError: 'Поле должно быть заполнено' }))
+      return;
+    }
+
+    const rawRes = await fetch(`${process.env.REACT_APP_API_URL}/budget/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(inputVals)
-    })
-      .then(rawRes => rawRes.json())
-      .then(res => setPredVals(prev => ({ ...prev, turnover: res })))
+    });
+
+    const res = await rawRes.json();
+
+    switch (rawRes.status) {
+      case 200:
+        setPredVals(prev => ({ ...prev, budget: res }));
+        break;
+      case 400:
+        setPredVals(prev => ({ ...prev, budgetError: `Ошибка ввода данных: ${res.message}` }));
+        break;
+      default:
+        setPredVals(prev => ({ ...prev, budgetError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
+    }
   }
 
   const clearInputs = () => {
@@ -83,12 +134,21 @@ export default function App() {
       project: '',
       financing: '',
       nomenclature: '',
-      description: ''
+      description: '',
+      objectError: null,
+      nomenclatureError: null,
+      descriptionError: null
     })
     setPredVals({
       budget: null,
-      turnover: null
+      turnover: null,
+      budgetError: null,
+      turnoverError: null
     })
+  }
+
+  const isPredictionExist = () => {
+    return predVals.turnover || predVals.budget || predVals.budgetError || predVals.turnoverError
   }
 
   const getOuputHelpText = (predProbability) => {
@@ -115,10 +175,12 @@ export default function App() {
             renderInput={params => (
               <TextField 
                 {...params} 
-                label="ЦФО"
+                label="* ЦФО"
                 margin="normal" 
                 variant="outlined" 
-                fullWidth 
+                fullWidth
+                error={inputVals.objectError}
+                helperText={inputVals.objectError}
               />
             )}
           />
@@ -156,16 +218,18 @@ export default function App() {
             renderInput={params => (
               <TextField 
                 {...params} 
-                label='Номенклатура' 
+                label='* Номенклатура' 
                 margin="normal" 
                 variant="outlined" 
-                fullWidth 
+                fullWidth
+                error={inputVals.nomenclatureError}
+                helperText={inputVals.nomenclatureError}
               />
             )}
           />
 
           <TextField
-            label="Описание"
+            label="* Описание"
             multiline
             fullWidth
             rows="4"
@@ -174,6 +238,8 @@ export default function App() {
             variant="outlined"
             onChange={e => setInputVals({ ...inputVals, description: e.target.value })}
             value={inputVals.description}
+            error={inputVals.descriptionError}
+            helperText={inputVals.descriptionError}
           />
 
           <Button variant="outlined" color="secondary" className={classes.button} onClick={clearInputs}>
@@ -186,7 +252,7 @@ export default function App() {
         </div>
       </Grid>
       <Grid item xs={6} sm={4}>
-        <Paper className={classes.predictionPaper} style={{display: predVals.budget || predVals.turnover ? 'block' : 'none'}} elevation={3}>
+        <Paper className={classes.predictionPaper} style={{display: isPredictionExist() ? 'block' : 'none'}} elevation={3}>
           <Typography variant="h5" className={classes.title} gutterBottom>Результат</Typography>
 
           {predVals.turnover && <>
@@ -218,6 +284,10 @@ export default function App() {
             }
           </>}
 
+          {predVals.turnoverError && <>
+            <Typography variant="subtitle1" gutterBottom className={classes.errorDisplay}>{predVals.turnoverError}</Typography>
+          </>}
+
           {predVals.budget && <>
             <TextField
               error={predVals.budget.main.probability < 70}
@@ -245,6 +315,10 @@ export default function App() {
                 </Box>
               </Typography>
             }
+          </>}
+
+          {predVals.budgetError && <>
+            <Typography variant="subtitle1" gutterBottom className={classes.errorDisplay}>{predVals.budgetError}</Typography>
           </>}
         </Paper>
       </Grid>
