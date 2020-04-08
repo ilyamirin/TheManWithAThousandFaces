@@ -74,10 +74,9 @@ export default function App() {
   }
 
   const reqPredictTurnover = async () => {
-    if (!inputVals.nomenclature || !inputVals.description) {
+    if (!inputVals.nomenclature) {
       setInputVals(prev => ({ ...prev,
-        nomenclatureError: !inputVals.nomenclature ? 'Поле должно быть заполнено' : null,
-        descriptionError: !inputVals.description ? 'Поле должно быть заполнено' : null,
+        nomenclatureError: !inputVals.nomenclature ? 'Поле должно быть заполнено' : null
       }))
       return;
     }
@@ -90,15 +89,17 @@ export default function App() {
 
     const res = await rawRes.json();
 
+    setInputVals(prev => ({ ...prev, nomenclatureError: null }))
+
     switch (rawRes.status) {
       case 200:
-        setPredVals(prev => ({ ...prev, turnover: res }));
+        setPredVals(prev => ({ ...prev, turnover: res, turnoverError: null }));
         break;
       case 400:
-        setPredVals(prev => ({ ...prev, turnoverError: `Ошибка ввода данных: ${res.message}` }));
+        setPredVals(prev => ({ ...prev, turnover: null, turnoverError: `Ошибка ввода данных: ${res.message}` }));
         break;
       default:
-        setPredVals(prev => ({ ...prev, turnoverError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
+        setPredVals(prev => ({ ...prev, turnover: null, turnoverError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
     }
   }
 
@@ -116,15 +117,17 @@ export default function App() {
 
     const res = await rawRes.json();
 
+    setInputVals(prev => ({ ...prev, objectError: null }))
+
     switch (rawRes.status) {
       case 200:
-        setPredVals(prev => ({ ...prev, budget: res }));
+        setPredVals(prev => ({ ...prev, budget: res, budgetError: null }));
         break;
       case 400:
-        setPredVals(prev => ({ ...prev, budgetError: `Ошибка ввода данных: ${res.message}` }));
+        setPredVals(prev => ({ ...prev, budget: null, budgetError: `Ошибка ввода данных: ${res.message}` }));
         break;
       default:
-        setPredVals(prev => ({ ...prev, budgetError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
+        setPredVals(prev => ({ ...prev, budget: null, budgetError: `Внутренняя ошибка: ${res.message}. Пожалуйста, обратитесь к администратору.` }));
     }
   }
 
@@ -136,8 +139,7 @@ export default function App() {
       nomenclature: '',
       description: '',
       objectError: null,
-      nomenclatureError: null,
-      descriptionError: null
+      nomenclatureError: null
     })
     setPredVals({
       budget: null,
@@ -229,7 +231,7 @@ export default function App() {
           />
 
           <TextField
-            label="* Описание"
+            label="Описание"
             multiline
             fullWidth
             rows="4"

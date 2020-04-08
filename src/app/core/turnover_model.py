@@ -134,7 +134,11 @@ class TurnoverModel:
 
     def _get_embeddings(self, phrase: str) -> np.ndarray:
         phrase_tokens = self._clear_phrase(phrase).split()
-        return np.array(list(map(self._fasttext.get_word_vector, phrase_tokens)))
+        
+        if (len(phrase_tokens) == 0):
+            return np.array([np.zeros(EMBEDDING_VEC_LEN)])
+        else:
+            return np.array(list(map(self._fasttext.get_word_vector, phrase_tokens)))
     
     def _clear_phrase(self, phrase: str) -> str:
         lower_cased = phrase.lower()
