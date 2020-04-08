@@ -1,6 +1,7 @@
 .vscode
 .venv
 .env
+.rclone.conf
 src/resources/*
 !src/resources/readme
 **/__pycache__

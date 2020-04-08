@@ -1,5 +1,24 @@
 cd $(dirname $0)/../..
 
+if ! [ -x "$(command -v virtualenv)" ]; then
+    echo "Installing python virtual environment..."
+    
+    sudo apt install -y python3-pip
+    sudo pip3 install -U virtualenv
+
+    echo "├── Complete"
+fi
+
+if ! [ -x "$(command -v npm)" ]; then
+    echo "Installing NPM..."
+
+    sudo apt install -y npm
+    sudo npm install -g npm
+    hash -d npm
+
+    echo "├── Complete"
+fi
+
 if [ ! -d src/resources/pretrained/rubert ]; then
     echo "Downloading BERT embedding model..."
 
@@ -34,10 +53,10 @@ if [ ! -d .venv ]; then
 fi
 
 if [ ! -d src/ui/node_modules ]; then
-    echo "
-    Initializing UI...
-    "
+    echo "Resolve UI (js) dependencies..."
 
     cd src/ui
     npm install
+
+    echo "├── Complete"
 fi

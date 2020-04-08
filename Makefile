@@ -11,18 +11,17 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
     @:
 
 
-install:
-	@./src/operation/resolve-system-dependencies.sh
-	@./src/operation/resolve-app-dependencies.sh
+init-system:
+	@./src/operation/init-system.sh
+
+init-gogole-drive:
+	@./src/operation/init-gogole-drive.sh
+
+init-local-dev: init-system init-gogole-drive
+	@./src/operation/init-local-dev.sh
 
 update-python-libs:
 	@./.venv/bin/pip install -r requirements.txt
-
-config-drive-connection:
-	@./src/operation/config-drive-connection.sh
-
-sync-resources-inbound: config-drive-connection
-	@./src/operation/sync-resources-inbound.sh
 
 train-turnover-model:
 	@.venv/bin/python3.6 src/app/train_turnover_model.py
@@ -34,7 +33,7 @@ train-budget-model:
 
 train-models: train_budget_model train_turnover_model
 
-build:
+build: init-local-dev
 	@./src/operation/build.sh
 
 run:
@@ -43,7 +42,7 @@ run:
 stop:
 	@./src/operation/stop.sh
 
-start: install sync-resources-inbound build run
+start: build run
 	@echo "Successfully Started"
 
 restart: stop start
