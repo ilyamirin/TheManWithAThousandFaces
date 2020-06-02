@@ -16,7 +16,3 @@ if [ ! -f ~/.config/rclone/rclone.conf ]; then
 
     echo "├── Complete"
 fi
-
-echo "Synchronizing resources with Google Drive..."
-rclone sync KeterideDrive:Financial-Analytics-Classifier src/resources/production
-echo "├── Complete"

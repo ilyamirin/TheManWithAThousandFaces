@@ -17,27 +17,26 @@ init-system:
 init-google-drive:
 	@./src/operation/init-google-drive.sh
 
-init-local-dev: init-system init-google-drive
+sync-google-drive:
+	@./src/operation/sync-google-drive.sh
+
+init-local-dev: init-system init-google-drive sync-google-drive
 	@./src/operation/init-local-dev.sh
 
 update-python-libs:
 	@./.venv/bin/pip install -r requirements.txt
-
-train-turnover-model:
-	@.venv/bin/python3.6 src/app/train_turnover_model.py
-	@./src/operation/sync-resources-outbound.sh
-
-train-budget-model:
-	@.venv/bin/python3.6 src/app/train_budget_model.py
-	@./src/operation/sync-resources-outbound.sh
-
-train-models: train_budget_model train_turnover_model
 
 build: init-system init-google-drive
 	@./src/operation/build.sh
 
 run:
 	@./src/operation/run.sh
+
+run-train-budget-model:
+	@./src/operation/run-train-budget-model.sh
+
+run-train-turnover-model:
+	@./src/operation/run-train-turnover-model.sh
 
 stop:
 	@./src/operation/stop.sh
@@ -46,6 +45,12 @@ start: build run
 	@echo "Successfully Started"
 
 restart: stop start
+
+train-turnover-model: build run-train-turnover-model
+
+train-budget-model: build run-train-budget-model
+
+train-models: train-turnover-model train-budget-model
 
 logs:
 	@docker logs -f fac-$(call args)
