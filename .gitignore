@@ -3,5 +3,6 @@
 .env
 .rclone.conf
 src/resources/*
+!src/resources/production
 !src/resources/readme
 **/__pycache__

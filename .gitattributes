@@ -1,0 +1,8 @@
+src/resources/production/dataset.csv filter=lfs diff=lfs merge=lfs -text
+src/resources/production/budget/model.pt filter=lfs diff=lfs merge=lfs -text
+src/resources/production/budget/history.tsv filter=lfs diff=lfs merge=lfs -text
+src/resources/production/budget/categorical/budget.txt filter=lfs diff=lfs merge=lfs -text
+src/resources/production/budget/categorical/financing.txt filter=lfs diff=lfs merge=lfs -text
+src/resources/production/turnover/model.h5 filter=lfs diff=lfs merge=lfs -text
+src/resources/production/turnover/history.tsv filter=lfs diff=lfs merge=lfs -text
+src/resources/production/turnover/categorical/turnover.txt filter=lfs diff=lfs merge=lfs -text
