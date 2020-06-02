@@ -15,11 +15,11 @@ log in to keteride@gmail account to connect to Google Drive. Please wait for the
 > **Note 2:** The first launch takes from 15 to 30 minutes due to the need to download
 and process more than 10 GB of data. But subsequent launches take less than 1 minute.
 
-## Install (e.g. to run only research Jutyper Notebooks)
+## Install for Development
 1. Copy '.env.example' to '.env'
 2. Run command:
     ```bash
-    make install
+    make init-local-dev
     ```
 
 ## Train models

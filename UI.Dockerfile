@@ -15,7 +15,11 @@ COPY src/ui/public src/ui/public
 COPY src/ui/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Build app
+ARG app_api_url
+ENV REACT_APP_API_URL=$app_api_url
+
 RUN npm run build --prefix src/ui/
+RUN rm -rf /usr/share/nginx/html
 RUN mv src/ui/build /usr/share/nginx/html
 
 EXPOSE 80

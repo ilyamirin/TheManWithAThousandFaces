@@ -14,10 +14,10 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 init-system:
 	@./src/operation/init-system.sh
 
-init-gogole-drive:
-	@./src/operation/init-gogole-drive.sh
+init-google-drive:
+	@./src/operation/init-google-drive.sh
 
-init-local-dev: init-system init-gogole-drive
+init-local-dev: init-system init-google-drive
 	@./src/operation/init-local-dev.sh
 
 update-python-libs:
@@ -33,7 +33,7 @@ train-budget-model:
 
 train-models: train_budget_model train_turnover_model
 
-build: init-local-dev
+build: init-system init-google-drive
 	@./src/operation/build.sh
 
 run:

@@ -5,5 +5,5 @@ docker build -t fac-app -f App.Dockerfile .
 echo "├── Complete"
 
 echo "Building UI..."
-docker build -t fac-ui -f UI.Dockerfile .
+docker build --build-arg app_api_url=${REACT_APP_API_URL} -t fac-ui -f UI.Dockerfile .
 echo "├── Complete"

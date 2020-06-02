@@ -1,23 +1,25 @@
 FROM ubuntu:18.04
 
-# Init system
 RUN apt-get update
-RUN apt-get install -y python3-pip
-RUN apt-get install -y curl
-RUN apt-get install -y unzip
-RUN apt-get install -y wget
-RUN pip3 install -U virtualenv
-
-# Init google drive
-RUN curl https://rclone.org/install.sh | bash
-COPY .rclone.conf /root/.config/rclone/rclone.conf
 
 # Download pretrained fastText
+RUN apt-get install -y wget
+
 RUN wget "http://files.deeppavlov.ai/embeddings/ft_native_300_ru_wiki_lenta_lower_case/ft_native_300_ru_wiki_lenta_lower_case.bin"
+
+# Init google drive
+RUN apt-get install -y curl
+RUN apt-get install -y unzip
+
+RUN curl https://rclone.org/install.sh | bash
+COPY .rclone.conf /root/.config/rclone/rclone.conf
 
 WORKDIR /home/app
 
 # Resolve app dependencies
+RUN apt-get update && apt-get install -y python3-pip
+RUN pip3 install -U virtualenv
+
 COPY requirements.txt ./
 RUN virtualenv --system-site-packages -p python3 ./.venv
 RUN ./.venv/bin/pip install --upgrade pip
