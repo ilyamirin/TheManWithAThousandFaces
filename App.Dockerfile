@@ -7,13 +7,6 @@ RUN apt-get install -y wget
 
 RUN wget "http://files.deeppavlov.ai/embeddings/ft_native_300_ru_wiki_lenta_lower_case/ft_native_300_ru_wiki_lenta_lower_case.bin"
 
-# Init google drive
-RUN apt-get install -y curl
-RUN apt-get install -y unzip
-
-RUN curl https://rclone.org/install.sh | bash
-COPY .rclone.conf /root/.config/rclone/rclone.conf
-
 WORKDIR /home/app
 
 # Resolve app dependencies
@@ -26,18 +19,11 @@ RUN ./.venv/bin/pip install --upgrade pip
 RUN ./.venv/bin/pip install --upgrade -r requirements.txt
 
 # Copy app sources
+RUN mkdir -p src/resources/pretrained && mv /ft_native_300_ru_wiki_lenta_lower_case.bin src/resources/pretrained/dp-fasttext.bin
 COPY src/app/web.py src/app/
 COPY src/app/core src/app/core
-RUN mkdir -p src/resources/pretrained && mv /ft_native_300_ru_wiki_lenta_lower_case.bin src/resources/pretrained/dp-fasttext.bin
+COPY src/resources/production src/resources/production
 
 EXPOSE 5000
 
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
-
-# Disable docker build cache for next commands
-ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-
-# Download trained model from Google Drive
-RUN rclone sync KeterideDrive:Financial-Analytics-Classifier/resources src/resources/production
-
-ENTRYPOINT ./.venv/bin/python3.6 src/app/web.py
+ENTRYPOINT .venv/bin/python3.6 src/app/web.py

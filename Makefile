@@ -14,19 +14,13 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 init-system:
 	@./src/operation/init-system.sh
 
-init-google-drive:
-	@./src/operation/init-google-drive.sh
-
-sync-google-drive:
-	@./src/operation/sync-google-drive.sh
-
-init-local-dev: init-system init-google-drive sync-google-drive
+init-local-dev: init-system
 	@./src/operation/init-local-dev.sh
 
 update-python-libs:
 	@./.venv/bin/pip install -r requirements.txt
 
-build: init-system init-google-drive
+build: init-system
 	@./src/operation/build.sh
 
 run:
