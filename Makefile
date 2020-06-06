@@ -49,7 +49,10 @@ train-budget-model: build run-train-budget-model
 
 train-models: train-turnover-model train-budget-model
 
-retrain-models: build run-supplement-dataset run-train-budget-model run-train-turnover-model
+release-models:
+	@./src/operation/release-models.sh
+
+retrain-models: build run-supplement-dataset run-train-budget-model run-train-turnover-model release-models
 
 logs:
 	@docker logs -f fac-$(call args)
