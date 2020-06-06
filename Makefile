@@ -32,6 +32,9 @@ run-train-budget-model:
 run-train-turnover-model:
 	@./src/operation/run-train-turnover-model.sh
 
+run-supplement-dataset:
+	@./src/operation/run-supplement-dataset.sh $(DATASET_PATCH)
+
 stop:
 	@./src/operation/stop.sh
 

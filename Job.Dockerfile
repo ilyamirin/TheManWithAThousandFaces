@@ -20,11 +20,8 @@ RUN ./.venv/bin/pip install --upgrade -r requirements.txt
 
 # Copy app sources
 RUN mkdir -p src/resources/pretrained && mv /ft_native_300_ru_wiki_lenta_lower_case.bin src/resources/pretrained/dp-fasttext.bin
-COPY src/app/core src/app/core
-ARG train_script
-ENV TRAIN_SCRIPT=$train_script
-COPY src/app/$TRAIN_SCRIPT.py src/app/
+COPY src/app src/app
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-ENTRYPOINT .venv/bin/python3.6 src/app/$TRAIN_SCRIPT.py
+ENTRYPOINT [".venv/bin/python3.6"]
