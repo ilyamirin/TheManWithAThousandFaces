@@ -15,12 +15,11 @@ log in to keteride@gmail account to connect to Google Drive. Please wait for the
 > **Note 2:** The first launch takes from 15 to 30 minutes due to the need to download
 and process more than 10 GB of data. But subsequent launches take less than 1 minute.
 
-## Train models
-1. Upload dataset to keteride@gmail's Google Drive as 'dataset.csv' file with columns 
-'object', 'project', 'financing', 'nomenclature' and 'description'.
+## Retrain models
+1. Prepare a dataset patch as the CSV file with columns 'ЦФО', 'ЦФОГУИД', 'ВЦСШапка', 'ВЦСШапка ГУИД', 'Ви пи проект шапка', 'Ви пи проект шапка ГУИД', 'Номенклатура', 'Номенклатура ГУИД', 'Характеристика номенклатуры', 'Код ОКВЭД', 'Код ОКВЭДГУИД', 'Код ОКПД', 'Код ОКПДГУИД', 'ВЦСТаблица ДЭП', 'ВЦСТаблица ДЭПГУИД', 'Ви пи проект таблица ДЭП', 'Ви пи проект таблица ДЭПГУИД', 'Мероприятие', 'Мероприятие ГУИД', 'Статья оборотов', 'Статья оборотов ГУИД', 'Смета', 'Смета ГУИД', 'КВР', 'КВРГУИД'.
 2. Run command:
     ```bash
-    make train-models
+    make retrain-models DATASET_PATCH=<path_to_csv_file>
     ```
 
 ## Install for Development
