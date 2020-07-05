@@ -1,4 +1,8 @@
- if ! [ -x "$(command -v npm)" ] || ! [ -x "$(command -v docker)" ]; then
+#!/bin/bash
+
+set -e
+
+if ! [ -x "$(command -v npm)" ] || ! [ -x "$(command -v docker)" ]; then
     echo "Updating system..."
     
     sudo apt update

@@ -3,6 +3,7 @@
 .git
 .vscode
 src/resources
+!src/resources/production
 src/research
 src/ui/node_modules
 src/ui/build

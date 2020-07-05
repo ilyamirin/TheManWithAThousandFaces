@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ "$(docker ps -f "name=fac-app" --format '{{.Names}}')" == "fac-app" ]; then
     echo "Stopping App..."
     docker rm -f fac-app
