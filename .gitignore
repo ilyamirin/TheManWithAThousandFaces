@@ -1,7 +1,9 @@
 .vscode
 .venv
 .env
-src/resources/*
-!src/resources/production
-!src/resources/readme
+src/resources/cache
+src/resources/dataset/*
+!src/resources/dataset/original.csv
+src/resources/model_checkpoint
+src/resources/pretrained
 **/__pycache__
