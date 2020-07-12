@@ -1,6 +1,6 @@
 Name	Embedding Feed-Forward NN
-[Cleared] Accuracy	0.8571
-[Cleared] Log Loss	0.4333
-[Original] Accuracy	0.8807
-[Original] Log Loss	0.636
-Training time (sec)	10.140645503997803
+[Cleared] Accuracy	0.8409
+[Cleared] Log Loss	0.6319
+[Original] Accuracy	0.8849947368421054
+[Original] Log Loss	0.6565421052631578
+Training time (sec)	11.801918745040894
