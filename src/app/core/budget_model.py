@@ -332,7 +332,6 @@ class BudgetModel:
         df.financing = df.financing.replace('БЕЗ ВЦС', np.NaN)
         df = df.fillna('')
         df = self._replace_year_specific_targets(df)
-        df = self._mask_financing_df(df)
         df = self._extract_unique_dataset(df)
         df = self._remove_rare_targets(df)
         print('├── Complete')
@@ -344,12 +343,6 @@ class BudgetModel:
         for i in range(10, current_year):
             fixed_df.budget = fixed_df.budget.replace(f'Ппкс 20{i}', f'Ппкс 20{current_year}')
             fixed_df.budget = fixed_df.budget.replace(f'Субсидия на ИЦ_ОЗОБ 20{i}', f'Субсидия на ИЦ_ОЗОБ 20{current_year}')
-        return fixed_df
-    
-    def _mask_financing_df(self, df: DataFrame) -> DataFrame:
-        fixed_df = df
-        fixed_df.financing = fixed_df.financing.apply(self._mask_financing)
-        fixed_df = fixed_df.drop(fixed_df[fixed_df.financing == 'UNKNOWN'].index)
         return fixed_df
 
     def _extract_unique_dataset(self, df: DataFrame) -> DataFrame:
