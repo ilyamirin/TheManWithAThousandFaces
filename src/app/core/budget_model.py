@@ -1,4 +1,5 @@
 import re
+import json
 from datetime import datetime
 from time import time, strftime, gmtime
 from pathlib import Path
@@ -24,32 +25,13 @@ from core.domain import BudgetInput, NetOutput, Prediction, BusinessException
 
 
 RESOURCES_PATH = 'src/resources/production/budget'
+UI_SRC_PATH = 'src/ui/src'
 
 EMBEDDING_VEC_LEN = 300
 MAX_PHRASE_LEN = 15
 FIT_MAX_EPOCHS = 300
 FIT_EARLY_STOP_PATIENCE = 30
 FIT_VALIDATION_SIZE = 0.1
-
-FINANCING_MASK_MAP = {
-    'Ханьбань, КНР':     'Ханьбань, КНР',
-    'Дальнефтепровод':   'Дальнефтепровод',
-    'Фонд Оксфорда':     'Фонд Оксфорда',
-    'ЭАЦ':               'ЭАЦ',
-    'УНМ':               'УНМ',
-    'Роснефть-классы':   'Роснефть-классы',
-    'Д-000-00':          r'^Д-\d{1,3}-\d{2}(_.+)?(\/\d+)?$',
-    '00-00-00000':       r'^\d{2}-\d{2,3}-\d{5}(\/\d{2})?(-П)?$',
-    '000000/00000Д':     r'^\d{6,7}\/\d{4,5}Д$',
-    '0000-0000/000-000': r'^\d{4}-\d{4}\/\d{3}-\d{3}$',
-    '000-00Т':           r'^\d{3}\/\d{2}Т$',
-    '0000-000-00-0':     r'^\d{4}-\d{3}-\d{2}-\d$',
-    'DD-MM-YY':          r'^\d{2}-\d{2}-\d{2}$',
-    '0/0000/0000':       r'^\d{1}\/\d{4}\/\d{4}$',
-    '00.000.00.0000':    r'^\d{2}\.\d{3}\.\d{2}\.\d{4}$',
-    '000-00-0000-000/0': r'^\d{3}-\d{2}-\d{4}-\d{3}\/\d$',
-    'МК-0000.0000.0':    r'^МК-\d{4}\.\d{4}\.\d(\/\d{2})?$'
-}
 
 
 class _EmbeddingFFNN(nn.Module):
@@ -232,12 +214,14 @@ class BudgetModel:
             print(*self._budget_le.classes_, sep='\n', end='', file=fout)
         with open(f'{RESOURCES_PATH}/categorical/financing.txt', 'w') as fout: 
             print(*self._financing_le.classes_, sep='\n', end='', file=fout)
+        with open(f'{UI_SRC_PATH}/categorical/financing.json', 'w') as fout: 
+            print(json.dumps(self._financing_le.classes_.tolist()), file=fout)
 
 
     def _to_x_vec(self, obj: str, project: str, financing: str) -> [tensor, tensor, tensor]:
         obj_vec = pad_sequences([self._get_embeddings(obj)], maxlen=MAX_PHRASE_LEN, dtype='float32')
         prj_vec = pad_sequences([self._get_embeddings(project)], maxlen=MAX_PHRASE_LEN, dtype='float32')
-        fin_vec = to_categorical(self._financing_le.transform([self._mask_financing(financing, raise_error=True)]), len(self._financing_le.classes_))
+        fin_vec = to_categorical(self._financing_le.transform([financing]), len(self._financing_le.classes_))
         return tensor(obj_vec), tensor(prj_vec), tensor(fin_vec)
 
     def _get_train_vecs(self) -> [[tensor, tensor, tensor], tensor]:
@@ -267,19 +251,6 @@ class BudgetModel:
             self._to_prediction(main_pred[0], main_pred[1]), 
             [self._to_prediction(i[0], i[1]) for i in alt_preds]
         )
-
-    def _mask_financing(self, value: str, raise_error = False):
-        if str(value) == 'nan' or value == '':
-            return ''
-
-        for k in FINANCING_MASK_MAP:
-            if re.match(FINANCING_MASK_MAP[k], value):
-                return k
-
-        if raise_error:
-            raise BusinessException('Неподдерживаемый формат ВЦС')
-        else:
-            return 'UNKNOWN'
 
     def _get_embeddings(self, phrase: str) -> np.ndarray:
         phrase_tokens = self._clear_phrase(phrase).split()
@@ -318,7 +289,7 @@ class BudgetModel:
 
     def _warm_up(self) -> None:
         print('Warming up budget model...')
-        self.predict(BudgetInput('Warm up', 'Warm up', 'Д-123-45'))
+        self.predict(BudgetInput('Warm up', 'Warm up', 'Д-000-00'))
         print('├── Complete')
 
     def _set_reproducibility(self) -> None:
@@ -329,7 +300,6 @@ class BudgetModel:
         print('Preparing dataset...')
         df = df[['object', 'financing', 'project', 'budget']]
         df = df.drop(df[df.budget.isnull()].index)
-        df.financing = df.financing.replace('БЕЗ ВЦС', np.NaN)
         df = df.fillna('')
         df = self._replace_year_specific_targets(df)
         df = self._extract_unique_dataset(df)

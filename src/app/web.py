@@ -26,7 +26,7 @@ def predict_turnover():
         return jsonify(e.__dict__), 400
     except Exception as e:
         traceback.print_exc()
-        return jsonify(e.__dict__), 500
+        return jsonify({'status': 'Internal Error', 'message': str(e)}), 500
 
 @app.route('/budget/predict', methods=['POST'])
 def predict_budget():
@@ -38,6 +38,6 @@ def predict_budget():
         return jsonify(e.__dict__), 400
     except Exception as e:
         traceback.print_exc()
-        return jsonify(e.__dict__), 500
+        return jsonify({'status': 'Internal Error', 'message': str(e)}), 500
 
 app.run(host='0.0.0.0')

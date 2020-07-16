@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import object_cats from './categorical/objects.json';
 import project_cats from './categorical/projects.json';
 import nomenclature_cats from './categorical/nomenclatures.json';
+import financing_cats from './categorical/financing.json';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -203,13 +204,20 @@ export default function App() {
             )}
           />
 
-          <TextField
-            label="ВЦС"
-            margin="normal"
-            variant="outlined" 
-            fullWidth
-            onChange={e => setInputVals({ ...inputVals, financing: e.target.value })}
+          <Autocomplete
+            options={financing_cats}
+            getOptionLabel={option => option}
+            onChange={e => setInputVals({ ...inputVals, financing: e.target.innerText })}
             value={inputVals.financing}
+            renderInput={params => (
+              <TextField 
+                {...params} 
+                label='ВЦС' 
+                margin="normal" 
+                variant="outlined" 
+                fullWidth 
+              />
+            )}
           />
 
           <Autocomplete
