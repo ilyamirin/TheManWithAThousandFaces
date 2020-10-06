@@ -26,4 +26,6 @@ COPY src/resources/production src/resources/production
 
 EXPOSE 5000
 
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
+
 ENTRYPOINT .venv/bin/python3.6 src/app/web.py
