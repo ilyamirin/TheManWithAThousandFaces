@@ -53,7 +53,7 @@ export default function App() {
   const [inputVals, setInputVals] = React.useState({
     object: '',
     project: '',
-    financing: '',
+    financing: 'БЕЗ ВЦС',
     nomenclature: '',
     description: '',
     objectError: null,
@@ -214,7 +214,7 @@ export default function App() {
                 {...params} 
                 label='ВЦС' 
                 margin="normal" 
-                variant="outlined" 
+                variant="outlined"
                 fullWidth 
               />
             )}
