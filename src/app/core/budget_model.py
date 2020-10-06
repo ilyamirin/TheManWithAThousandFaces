@@ -274,7 +274,7 @@ class BudgetModel:
         print('Loading budget model...')
         model = torch.load(f'{RESOURCES_PATH}/model.pt')
         model.eval()
-        print('├── Complete')
+        print('Complete')
         return model
     
     def _load_label_encoder(self, label: str) -> LabelEncoder:
@@ -290,7 +290,7 @@ class BudgetModel:
     def _warm_up(self) -> None:
         print('Warming up budget model...')
         self.predict(BudgetInput('Warm up', 'Warm up', 'Д-000-00'))
-        print('├── Complete')
+        print('Complete')
 
     def _set_reproducibility(self) -> None:
         np.random.seed(42)
@@ -304,7 +304,7 @@ class BudgetModel:
         df = self._replace_year_specific_targets(df)
         df = self._extract_unique_dataset(df)
         df = self._remove_rare_targets(df)
-        print('├── Complete')
+        print('Complete')
         return df
 
     def _replace_year_specific_targets(self, df: DataFrame) -> DataFrame:

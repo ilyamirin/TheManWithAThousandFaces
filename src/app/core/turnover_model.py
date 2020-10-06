@@ -150,7 +150,7 @@ class TurnoverModel:
     def _load_trained_model(self) -> Model:
         print('Loading turnover model...')
         model = load_model(f'{RESOURCES_PATH}/model.h5')
-        print('├── Complete')
+        print('Complete')
         return model
     
     def _load_label_encoder(self, label: str) -> LabelEncoder:
@@ -161,7 +161,7 @@ class TurnoverModel:
     def _warm_up(self) -> None:
         print('Warming up turnover model...')
         self.predict(TurnoverInput('Warm up', 'Warm up'))
-        print('├── Complete')
+        print('Complete')
     
     def _prepare_dataset(self, df: DataFrame) -> DataFrame:
         print('Preparing dataset...')
@@ -170,7 +170,7 @@ class TurnoverModel:
         df = df.fillna('')
         df = self._extract_unique_dataset(df)
         df = self._remove_rare_targets(df)
-        print('├── Complete')
+        print('Complete')
         return df
         
     def _extract_unique_dataset(self, df: DataFrame) -> DataFrame:
