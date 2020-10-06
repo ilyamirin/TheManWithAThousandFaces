@@ -4,6 +4,7 @@ set -e
 
 if [ ! "$(docker ps -f "name=fac-app" --format '{{.Names}}')" ]; then
     echo "Running App on port ${APP_PORT}..."
+    docker rm -f fac-app || true
     docker run -p ${APP_PORT}:5000 -d --name fac-app fac-app
     echo "├── Complete"
 else
@@ -12,6 +13,7 @@ fi
 
 if [ ! "$(docker ps -f "name=fac-ui" --format '{{.Names}}')" ]; then
     echo "Running UI on port ${UI_PORT}..."
+    docker rm -f fac-ui || true
     docker run -p ${UI_PORT}:80 -d --name fac-ui fac-ui
     echo "├── Complete"
 else
